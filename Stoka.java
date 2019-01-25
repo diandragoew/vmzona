@@ -14,6 +14,20 @@ public class Stoka implements Comparable<Stoka>{
         this.marka = marka;
         this.cvqt = cvqt;
     }
+	
+	public String getIme() {
+		return ime;
+	}
+	public int getCena() {
+		return cena;
+	}
+	
+	public String getMarka() {
+		return marka;
+	}
+	public int getCvqt() {
+		return cvqt;
+	}
 
     @Override
     public int compareTo(Stoka o) {
