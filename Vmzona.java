@@ -2,20 +2,20 @@ package vmzona;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class Vmzona {
     private String ime;
-    private Sklad sklad;
-    private Map<Kategoriq, TreeSet<Stoka>> stoki = new HashMap<Kategoriq, TreeSet<Stoka>>();
+
+    private Map<Kategoriq, Set<Stoka>> stoki = new HashMap<Kategoriq, Set<Stoka>>();
 
     public Vmzona(String ime) {
         this.ime = ime;
-        sklad = new Sklad(this);
     }
 
-    public void zarediSe(){
-        sklad.zaredi();
+    public void dobaviMnogoStoki(Kategoriq kategoriq, Map<Kategoriq, Set<Stoka>> stoki) {
+        this.stoki.putAll(stoki);
     }
 
     public void addStoka(Kategoriq kategoriq, Stoka stoka) {
@@ -33,7 +33,7 @@ public class Vmzona {
     }
 
     public void izkaraiVsichkiNalichniStoki() {
-        for (Map.Entry<Kategoriq, TreeSet<Stoka>> entry : stoki.entrySet()) {
+        for (Map.Entry<Kategoriq, Set<Stoka>> entry : stoki.entrySet()) {
             System.out.println("kategoriq " + entry.getKey());
             for (Stoka stoka : entry.getValue()) {
                 System.out.println(stoka);

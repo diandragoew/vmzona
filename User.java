@@ -1,12 +1,14 @@
 package vmzona;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class User {
     private String email;
     private String password;
-    private Set<Stoka> stokiVKolichka = new Set<Stoka>();
+    private Set<Stoka> stokiVKolichka = new TreeSet<>();
 
     public User(String email, String password) {
         this.email = email;

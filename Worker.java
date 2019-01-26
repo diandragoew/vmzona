@@ -1,4 +1,4 @@
-package warehouse;
+package vmzona;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package warehouse;
+package vmzona;
 
 import java.util.Map;
 
@@ -13,7 +13,7 @@ public class Dostavchik extends Paraliya {
 	public int zaredi(Map<Stoka, Integer> stoki) {
 		int totalMoney = 0;
 		for (Stoka stoka : stoki.keySet()) {
-			totalMoney += stoka.getPrice();
+			totalMoney += stoka.getCena();
 		}
 		
 		this.increaseSalary((int)(totalMoney * COEFF_PECHALBA)); 
