@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Stoka implements Comparable<Stoka> {
-    private class Sklad{
-        private  List<String> avtochasti = new ArrayList<String>(Arrays.asList("akumulator", "far", "chstachki"));
+    private class Sklad {
+        private List<String> avtochasti = new ArrayList<String>(Arrays.asList("akumulator", "far", "chstachki"));
         private List<String> parfyomi = new ArrayList<String>(Arrays.asList("refan", "paris", "playboy"));
         private List<String> belyo = new ArrayList<String>(Arrays.asList("slip", "prashka", "bokserka"));
         private List<String> halati = new ArrayList<String>(Arrays.asList("golqm", "malyk", "sreden"));
@@ -21,8 +21,8 @@ public class Stoka implements Comparable<Stoka> {
         private List<String> knigi = new ArrayList<String>(Arrays.asList("voina i mir", "java za wseki", "kniga s prikazki"));
 
 
-       private List<String> marki = new ArrayList<String>(Arrays.asList("hitachi", "adidas", "puma", "dolche", "kompas", "zara"));
-       private List<String> cvetove = new ArrayList<String>(Arrays.asList("jylt", "sin", "cherven", "rozov", "zalen", "cheren"));
+        private List<String> marki = new ArrayList<String>(Arrays.asList("hitachi", "adidas", "puma", "dolche", "kompas", "zara"));
+        private List<String> cvetove = new ArrayList<String>(Arrays.asList("jylt", "sin", "cherven", "rozov", "zalen", "cheren"));
 
 
     }
@@ -33,13 +33,16 @@ public class Stoka implements Comparable<Stoka> {
     private String marka;
     private String cvqt;
     private static Sklad sklad;
+    private int nomerNaStoka;
+    private static int broqchNomeraNaStoki=0;
 
-    public Stoka(String ime, int cena, String marka, String cvqt) {
+    public Stoka( String ime, int cena, String marka, String cvqt) {
         this.ime = ime;
         this.cena = cena;
         this.marka = marka;
         this.cvqt = cvqt;
-        sklad=new Sklad();
+        this.nomerNaStoka=++broqchNomeraNaStoki;
+        sklad = new Sklad();
     }
 
     public static Stoka daiStoka(int nomerKategoriq) throws Exception {
@@ -69,13 +72,13 @@ public class Stoka implements Comparable<Stoka> {
             case KNIGI:
                 return napraviStoka(sklad.knigi);
         }
-        throw new  Exception("podal si mi null");
+        throw new Exception("podal si mi null");
     }
 
     private static Stoka napraviStoka(List<String> kategoriq) {
-        return new Stoka(kategoriq.get( Demo.randomZaKolekcii(kategoriq)),
-                Demo.random(10,100),sklad.marki.get( Demo.randomZaKolekcii(sklad.marki)),
-                sklad.cvetove.get( Demo.randomZaKolekcii(sklad.cvetove))){
+        return new Stoka(kategoriq.get(Demo.randomZaKolekcii(kategoriq)),
+                Demo.random(10, 100), sklad.marki.get(Demo.randomZaKolekcii(sklad.marki)),
+                sklad.cvetove.get(Demo.randomZaKolekcii(sklad.cvetove))) {
 
         };
     }
@@ -98,16 +101,7 @@ public class Stoka implements Comparable<Stoka> {
 
     @Override
     public int compareTo(Stoka o) {
-        if (this.ime.compareTo(o.ime) != 0) {
-            return this.ime.compareTo(o.ime);
-        } else {
-            if (this.marka.compareTo(o.marka) != 0) {
-                return this.marka.compareTo(o.marka);
-            } else {
-                return this.cena - o.cena;
-            }
-
-        }
+        return this.nomerNaStoka-o.nomerNaStoka;
     }
 
     @Override
@@ -128,10 +122,14 @@ public class Stoka implements Comparable<Stoka> {
 
     @Override
     public String toString() {
-        return "ime='" + ime + '\'' +
-                ", cena=" + cena +
-                ", marka='" + marka + '\'' +
-                ", cvqt='" + cvqt + '\'' +
-                '}';
+        return   " nomerNaStoka=" + nomerNaStoka +
+                " ime= '" + ime + '\'' +
+                ", cena= " + cena +
+                ", marka= '" + marka + '\'' +
+                ", cvqt= " + cvqt ;
+    }
+
+    public int getNomerNaStoka() {
+        return nomerNaStoka;
     }
 }
