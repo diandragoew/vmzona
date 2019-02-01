@@ -1,7 +1,5 @@
 package vmzona;
 
-import java.util.*;
-
 public class Demo {
 
     public static final int BROI_RAZLICHNI_STOKI = 10;
@@ -14,7 +12,7 @@ public class Demo {
     public static int randomZaKolekcii(List<String> kolekciq) {
         return new Random().nextInt(kolekciq.size());
     }*/
-    ///Kogato e v demoto ne mi raboti, zatova gi premestih v stoka
+    ///Когато са в Демото при мен гърмят, затова ги преметих в Stoka
     
     public static void messageForExit() {
     	
@@ -32,7 +30,6 @@ public class Demo {
     }
 
     public static void main(String[] args) {
-<<<<<<< HEAD
     	Scanner sc = new Scanner(System.in);
     	try {
     		
@@ -104,61 +101,5 @@ public class Demo {
     	}
     }
 }
-=======
-        try {
-
-            Scanner sc = new Scanner(System.in);
-
-
-            Vmzona magazin = new Vmzona("Vmzona");
-            magazin.addStoka(Kategoriq.AVTOCHASTI, new Stoka("guma", 1, "iron", "lilav"));
-
-            for (int i = 0; i < BROI_RAZLICHNI_STOKI; i++) {
-
-                for (int j = 0; j < bROI_KATEGORII; j++) {
-                    try {
-                        magazin.addStoka(Kategoriq.values()[j], Stoka.daiStoka(j));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-
-            System.out.println("MENU VmZona");
-            System.out.println("--------");
-            System.out.println("vyvedi 1 za : Guest");
-            System.out.println("vyvedi 2 za : User");
-            System.out.println("vyvedi 3 za : Administrator");
-            System.out.println("vyvedi 0 za : Exit");
-
-
-            int choose = sc.nextInt();
-
-            while (true) {
-                System.out.println("ako iskash da izlezesh natisni 0");
-                if (choose == 0) {
-                    System.out.println("do skoro , pozdravi ot VmZona");
-                    break;
-                }
-                try {
-                    User user = User.daiMiUser(choose, "", "");
-                    user.buySomething();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        } catch (Exception e) {
-
-        }
-    }
-}
-
-
-
-
-
-
->>>>>>> db5efaa7ff83a3827687f17188a493d11c8ce127
 
 
