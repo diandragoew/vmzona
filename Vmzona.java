@@ -1,7 +1,9 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
@@ -10,58 +12,35 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class Vmzona {
-    private String ime;
+    private static final int BROI_RAZLICHNI_STOKI = 10;
+    
+	private String ime;
     private int oborot;
     private Map<Kategoriq, TreeMap<Integer, Stoka>> stoki = new HashMap<Kategoriq, TreeMap<Integer, Stoka>>();
     private Map<String, User> users = new HashMap<String, User>();
-    private List<Worker> workers = new ArrayList<Worker>();
-    private List<Dostavchik> dostavchici = new ArrayList<Dostavchik>();
-    private Map<Stoka, Integer> zakupeniStoki = new TreeMap<Stoka, Integer>();
+    private List<Dostavchik> dostavchici = new ArrayList<Dostavchik>(Arrays.asList(new Dostavchik("Mircho"), 
+    																				new Dostavchik("Pesho"), 
+    																				new Dostavchik("Lacho"),
+    																				new Dostavchik("Kaloqn")));
+    
+    private List<Stoka> porachaniStoki = new ArrayList<Stoka>();
 
     public Vmzona(String ime) {
         this.ime = ime;
-        users.put("niki@abv.bg", new User("niki@abv.bg", "talent"));
+        this.oborot = 0;
     }
-   
-  //******
-    public void addWorker(Worker worker) {
-		if (worker != null) {
-			this.workers .add(worker);
-		}
-	}
-    
-    public void addDostavchik(Dostavchik dostavchik) {
-		if (dostavchik != null) {
-			this.dostavchici.add(dostavchik);
-		}
-	}
 
-    public void dostavi(Map<Stoka, Integer> stokiZaDostavka){
+   
+    public void dostavi(){
     	Dostavchik randomDostavchik = (Dostavchik) getRandom(this.dostavchici);
-    	Worker randomWorker = (Worker) getRandom(this.workers);
-		this.decreaseMoney(randomDostavchik.zaredi(zakupeniStoki));
-		randomWorker.otpishi(zakupeniStoki);
-	}
-    
-    public void decreaseMoney(int money) {
-		if (money > 0) {
-			this.oborot -= money;
-		}
+    	System.out.println("The provider " + randomDostavchik.getName() + " will receive your order within two days!");
 	}
     
     private static Object getRandom(List list) {
 		return list.get(new Random().nextInt(list.size()));
 	}
-    
-    public void threeWorstWorkers() {
-		Collections.sort(this.workers, (w1, w2) -> w1.getOtpisaniStoki() - w2.getOtpisaniStoki());
-		System.out.println(this.workers.get(0));
-		System.out.println(this.workers.get(1));
-		System.out.println(this.workers.get(2));
-	}
-  //*****
-    
-	public void addStoka(Kategoriq kategoriq, Stoka stoka) {
+ 
+    public void addStoka(Kategoriq kategoriq, Stoka stoka) {
         if (!stoki.containsKey(kategoriq)) {
             stoki.put(kategoriq, new TreeMap<>());
         }
@@ -73,18 +52,17 @@ public class Vmzona {
             if (entry.getValue().containsKey(nomerNaStoka)) {
                 Stoka stoka = entry.getValue().get(nomerNaStoka);
                 entry.getValue().remove(nomerNaStoka);
-                oborot += stoka.getCena();
+                this.oborot += stoka.getCena();
                 return stoka;
             }
         }
         throw new Exception("The stock not exist");
     }
-    ///Klienta nqma ogranicheniq s parite, toi si pazaruva i plashta posle na mqsto sled dostavka!
 
     Scanner sc = new Scanner(System.in);
     
     public void izkaraiVsichkiNalichniStoki() {
-        System.out.println("izberi kriterii za sortirane");
+        System.out.println("Choose criterion for sorting: ");
         System.out.println("1 - price");
         System.out.println("2 - name");
         System.out.println("3 - unique number of stock");
@@ -122,8 +100,14 @@ public class Vmzona {
             }
             System.out.println();
         }
-}
-
+    }
+    
+    public void printAllProviders() {
+    	for(Dostavchik d : dostavchici) {
+    		System.out.println(d);
+    	}
+    }
+    
     public boolean proveriZaStoka(int nomer) {
         for (Map.Entry<Kategoriq, TreeMap<Integer, Stoka>> entry : stoki.entrySet()) {
             if (entry.getValue().containsKey(nomer)) {
@@ -133,12 +117,35 @@ public class Vmzona {
         return false;
     }
     
+    public void addOrders(Stoka stoka) {
+    	porachaniStoki.add(stoka);
+     }
+    
+    public void dobaviUser(String email, String parola) {
+        if (!users.containsKey(email)) {
+            users.put(email, new User(email, parola));
+        }
+    }
+    public void premahniUser(String email) {
+        if (users.containsKey(email)) {
+            users.remove(email);
+        }
+    }
+    
+    public void getOrderStocks() {
+    	int counter = 1;
+    	for (Stoka s : porachaniStoki) {
+            System.out.println(counter + ". id: " + s.getNomerNaStoka() + " - " + s.getIme());
+            counter++;
+        }
+    }
+    
     public Map<String, User> getUsers() {
     	return Collections.unmodifiableMap(users);
     }
+    
     
     public int getOborot() {
 		return oborot;
 	}
 }
-

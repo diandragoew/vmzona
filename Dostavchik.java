@@ -1,24 +1,25 @@
-package vmzona;
-
 import java.util.Map;
+import java.util.Random;
 
-public class Dostavchik extends Paraliya {
+public class Dostavchik{
 
-	private static final double COEFF_PECHALBA = 0.2;
+	private static final int MAX_SALARY = 1200;
+	private static final int MIN_SALARY = 800;
+	private String name;
+	private int salary;
 	
-	public Dostavchik(String name, int salary) {
-		super(name, salary);
+	public Dostavchik(String name){
+		this.name = name;
+		this.salary = new Random().nextInt(MAX_SALARY - MIN_SALARY + 1) + MIN_SALARY;
 	}
 	
-	public int zaredi(Map<Stoka, Integer> stoki) {
-		int totalMoney = 0;
-		for (Stoka stoka : stoki.keySet()) {
-			totalMoney += stoka.getCena();
-		}
-		
-		this.increaseSalary((int)(totalMoney * COEFF_PECHALBA)); 
-		return (int) (totalMoney + (totalMoney * COEFF_PECHALBA));
+	@Override
+	public String toString() {
+		return "[name -> " + name + ", salary -> " + salary + "lv.]";
 	}
 
+	public String getName() {
+		return name;
+	}
 
 }

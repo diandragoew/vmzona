@@ -1,3 +1,5 @@
+package vmzona;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,45 +67,55 @@ public class Profile {
 		}
 	}
 
-	private void validDay(int day) {
-		do {
-	        System.out.println("Enter correct day of birth: ");
-	        day = sc.nextInt();
-	    } while (day < 0 || day > 31);
+	private boolean validDay(int day) {
+		if(day > 0 || day <= 31) {
+			return true;
+		}
+		return false;
 	}
 	
-	private void validMonth(int month) {
-		do {
-	        System.out.println("Enter correct month of birth: ");
-	        month = sc.nextInt();
-	    } while (month < 0 || month > 12);
+	private boolean validMonth(int month) {
+		if(month > 0 || month <= 12) {
+			return true;
+		}
+		return false;
 	}
 	
-	private void validYear(int year) {
-		do {
-	        System.out.println("Enter correct year of birth: ");
-	        year = sc.nextInt();
-	    } while (year < 0 || year > Year.now().getValue());
+	private boolean validYear(int year) {
+		if(year > 0 || year <= Year.now().getValue()) {
+			return true;
+		}
+		return false;
 	}
 	
 	public void setBirthDate() {
-		System.out.println("Your Birth Date: ");
-		String date = sc.nextLine();
-		String[] dayMonthYear = date.split("/");
-		
-		if(dayMonthYear.length == 3) {
-			int day = Integer.parseInt(dayMonthYear[0]);
-			int month = Integer.parseInt(dayMonthYear[1]);
-			int year = Integer.parseInt(dayMonthYear[2]);
+		boolean isValid = false;
+		while(!isValid) {
+			System.out.println("Your Birth Date: ");
+			String date = sc.next();
+			String[] dayMonthYear = date.split("/");
+			
+			if(dayMonthYear.length == 3) {
+				int day = Integer.parseInt(dayMonthYear[0]);
+				int month = Integer.parseInt(dayMonthYear[1]);
+				int year = Integer.parseInt(dayMonthYear[2]);
+					
+				boolean b1 = this.validDay(day);
+				boolean b2 = this.validMonth(month);
+				boolean b3 = this.validYear(year);
+				if(b1 && b2 && b3) {
+					LocalDate locDate = LocalDate.of(year, month, day);
+					this.birthDate = locDate;
+					isValid = true;
+				}else {
+					System.out.println("Invalid date! ");
+					System.out.println("Try again: ");
+				}
 				
-			this.validDay(day);
-			this.validMonth(month);
-			this.validYear(year);
-			LocalDate locDate = LocalDate.of(year, month, day);
-			this.birthDate = locDate;
-		}
-		else {
-			System.out.println("Invalid date!"); 
+			}
+			else {
+				System.out.println("Invalid date!"); 
+			}
 		}
 	}
 
@@ -138,11 +150,10 @@ public class Profile {
 	}
 
 
-
 	@Override
 	public String toString() {
-		return "firstName: " + firstName + ", lastName: " + lastName + ", birthDate: " + birthDate + ", city:"
-				+ city + ", address: " + address + ", phoneNumber:" + phoneNumber ;
+		return "FirstName: " + firstName + ", LastName: " + lastName + ", BirthDate: " + birthDate + ", City:"
+				+ city + ", Address: " + address + ", PhoneNumber:" + phoneNumber ;
 	}
 	
 	

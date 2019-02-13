@@ -13,7 +13,7 @@ public class Stoka implements Comparable<Stoka> {
 	   private List<String> avtochasti = new ArrayList<String>(Arrays.asList("djanti, akumulator", "far", "chstachki"));
         private List<String> parfyomi = new ArrayList<String>(Arrays.asList("refan", "paris", "playboy"));
         private List<String> belyo = new ArrayList<String>(Arrays.asList("slip", "prashki s dantela", "bokserki"));
-        private List<String> halati = new ArrayList<String>(Arrays.asList("pamuchen halat", "koprinen", "halat s aplikacii"));
+        private List<String> halati = new ArrayList<String>(Arrays.asList("pamuchen halat", "koprinen halat", "halat s aplikacii"));
         private List<String> chanti = new ArrayList<String>(Arrays.asList("chanta ot istinska koja", "chanta ot izkustvena koja", "polirana chanta"));
         private List<String> obuvki = new ArrayList<String>(Arrays.asList("cherni botushi", "boti s visok tok", "rozovi kecove", "sandali", "ejednevni obuvki"));
         private List<String> chasovnici = new ArrayList<String>(Arrays.asList("roleks", "frenski vodoustoichiv chasovnik", "silikonov chasovnik"));
@@ -30,7 +30,7 @@ public class Stoka implements Comparable<Stoka> {
         private List<String> marki = new ArrayList<String>(Arrays.asList("hitachi", "adidas", "puma", "D&G", "kompas", "zara"));
         private List<String> cvetove = new ArrayList<String>(Arrays.asList("yellow", "blue", "red", "pink", "green", "black"));
 		
-		//Dobavih oshte stoki
+		//Добавих още стоки и промених имената на някои от съществуващите
 
     }
 
@@ -138,7 +138,8 @@ public class Stoka implements Comparable<Stoka> {
 
     @Override
     public String toString() {
-        return " ime = " + ime +
+        return "id = " + nomerNaStoka + 
+        		" ime = " + ime +
                 ", cena = " + cena +
                 ", marka = " + marka +
                 ", cvqt = " + cvqt ;

@@ -1,20 +1,16 @@
 package vmzona;
 
+import java.awt.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.Scanner;
+
 public class Demo {
 
     public static final int BROI_RAZLICHNI_STOKI = 10;
-    //public static final int BROI_KATEGORII = Kategoriq.values().length;
-
-    /*public static int random(int min, int max) {
-        return new Random().nextInt(max - min + 1) + min;
-    }
-
-    public static int randomZaKolekcii(List<String> kolekciq) {
-        return new Random().nextInt(kolekciq.size());
-    }*/
-    ///Когато са в Демото при мен гърмят, затова ги преметих в Stoka
     
-    public static void messageForExit() {
+    public static void messageForVote() {
     	
     	Scanner sc = new Scanner(System.in);
     	System.out.println("Are you rate our site with score of 1 to 5?");
@@ -28,7 +24,17 @@ public class Demo {
     		System.out.println("Bye, have a nice day and come again ;)");
     	}
     }
-
+    
+    public static void messageForExit(Vmzona magazin) {
+    		magazin.dostavi();
+    		System.out.println("Thank you for shopping with us.");
+    		System.out.println("Have a nice day! ;)");
+    		System.out.println();
+    		
+    		System.out.println("Enter 0 for exit or number from MENU(1,2,3) for continue ");
+    }
+    
+    
     public static void main(String[] args) {
     	Scanner sc = new Scanner(System.in);
     	try {
@@ -36,7 +42,7 @@ public class Demo {
 	        Vmzona magazin = new Vmzona("Vmzona");
 	        magazin.addStoka(Kategoriq.AVTOCHASTI, new Stoka("komplekt(2 gumi)", 25, "iron", "black"));
 	
-	       //*********************************************************************
+	        
 	        for(Kategoriq k : Kategoriq.values()) {
 	        	for(int i = 1; i <= BROI_RAZLICHNI_STOKI; i++) {
 	        		try {
@@ -46,9 +52,8 @@ public class Demo {
 	                }
 	        	}
 	        }
-	        //Ne mi izkarvashe stokite pravilno, zatova go promenih
-	        //*********************************************************************
 	
+	        
 	        System.out.println("MENU VmZona");
 	        System.out.println("--------");
 	        System.out.println("1 - Guest");
@@ -57,49 +62,54 @@ public class Demo {
 	        System.out.println("0 - Exit");
 	
 	        int choose = sc.nextInt();
-	        if(choose == 0) {
-	        	messageForExit();
-	        	return;
-	        	
-	        }else {
-	        	boolean isPlay = true;
-		        while (isPlay) {
-		            System.out.println("");
-		            if (choose == 0) {
-		            	messageForExit();
-		                isPlay = false;
-		            }else {
-		            	if(choose == 1) {
-		            		System.out.println("Guest!");
-		            		Guest guest = new Guest();
-		            		magazin.izkaraiVsichkiNalichniStoki();
-		            		System.out.println("Enter a number of stock, which you want to order: ");
-		                    int nomerNaStoka = sc.nextInt();
-		                    if (magazin.proveriZaStoka(nomerNaStoka)) {
-		                        try {
-		                            Stoka stoka = magazin.remoteStoka(nomerNaStoka);
-		                            guest.buySomething(stoka);
-		                        }catch(Exception e) {
-		                        	e.printStackTrace();
-		                        }
-		                    }
-		            		}else {
-		            			System.out.println("Other!!");
-		            			try {
-		            				User user = User.daiMiUser(choose, "", "");
-		            				user.doSomething();
-		            			} catch (Exception e) {
-		            			e.printStackTrace();
-		            			}
-		            		}
-		            	
-		            	}
+	        while(true) {
+		        if(choose == 0) {
+		        	messageForVote();
+		        	return;
+		        }else {
+		        	if(choose == 1) {
+	            		System.out.println("Guest!");
+	            		Guest guest = new Guest();
+	            		magazin.izkaraiVsichkiNalichniStoki();
+	            		
+	            		guest.action(magazin);
+        			
+            	    	System.out.println("Finished");
+            	    	System.out.println("Continue");
+            	    	String  st = sc.next();
+            	    	if(st.equals("Finished")) {
+            	    		messageForExit(magazin);
+            	    		choose = sc.nextInt();
+            	    	}else {
+            	    		continue;
+            	    	}
+            	    }
+		        	if(choose == 2){
+            			System.out.println("Other!!");
+            			try {
+            				User user = new User(); /*User.daiMiUser(choose, "", "")*/;
+            				user.actions(magazin);
+            				
+            				System.out.println("Enter 0 for exit or number from MENU(1,2,3) for continue ");
+            				choose = sc.nextInt();
+            				
+            			} catch (Exception e) {
+            				e.printStackTrace();
+            			}
+	            	}
+		        	else {
+		        		Admin admin = new Admin(magazin);
+		        		admin.actions();
+		        		
+		        		System.out.println("Enter 0 for exit or number from MENU(1,2,3) for continue ");
+        				choose = sc.nextInt();
 		        	}
-	        	}
+		            	
+		        }
+		    }
     	}catch (Exception e) {
-			e.printStackTrace();
+    		e.printStackTrace();
     	}
     }
 }
-
 
