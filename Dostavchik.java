@@ -1,3 +1,5 @@
+package vmzona;
+
 import java.util.Map;
 import java.util.Random;
 
@@ -15,7 +17,7 @@ public class Dostavchik{
 	
 	@Override
 	public String toString() {
-		return "[name -> " + name + ", salary -> " + salary + "lv.]";
+		return "[name -> " + name + ", salary -> " + salary + " lv.]";
 	}
 
 	public String getName() {

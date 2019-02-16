@@ -41,9 +41,7 @@ public class Profile {
         return phoneNumber != null && phoneNumber.trim().length() == 10 && phoneNumber.matches(regex);
     }
 	
-	/*private boolean checkForPhoneNumber(String phoneNumber) {
-		return phoneNumber != null && phoneNumber.trim().length() == 10;
-	}*/
+
 	
 
 	public void setFirstName() {
@@ -68,30 +66,21 @@ public class Profile {
 	}
 
 	private boolean validDay(int day) {
-		if(day > 0 || day <= 31) {
-			return true;
-		}
-		return false;
+		return day > 0 && day <= 31;
 	}
 	
 	private boolean validMonth(int month) {
-		if(month > 0 || month <= 12) {
-			return true;
-		}
-		return false;
+		return month > 0 && month <= 12;
 	}
 	
 	private boolean validYear(int year) {
-		if(year > 0 || year <= Year.now().getValue()) {
-			return true;
-		}
-		return false;
+		return year > 0 || year <= Year.now().getValue();
 	}
 	
 	public void setBirthDate() {
 		boolean isValid = false;
 		while(!isValid) {
-			System.out.println("Your Birth Date: ");
+			System.out.println("Your Birth Date: \"dd/mm/yyyy\"");
 			String date = sc.next();
 			String[] dayMonthYear = date.split("/");
 			

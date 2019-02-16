@@ -1,115 +1,108 @@
 package vmzona;
 
-import java.awt.List;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Demo {
 
     public static final int BROI_RAZLICHNI_STOKI = 10;
-    
-    public static void messageForVote() {
-    	
-    	Scanner sc = new Scanner(System.in);
-    	System.out.println("Are you rate our site with score of 1 to 5?");
-    	System.out.println("YES or NO");
-    	String chooseVote = sc.nextLine();
-    	if(chooseVote.equals("YES")){
-    		System.out.println("Vote:");
-    		int score = sc.nextInt();
-    		System.out.println("Thank you!");
-    	}else {
-    		System.out.println("Bye, have a nice day and come again ;)");
-    	}
-    }
-    
+
+
+
     public static void messageForExit(Vmzona magazin) {
-    		magazin.dostavi();
-    		System.out.println("Thank you for shopping with us.");
-    		System.out.println("Have a nice day! ;)");
-    		System.out.println();
-    		
-    		System.out.println("Enter 0 for exit or number from MENU(1,2,3) for continue ");
+        magazin.dostavi();
+        System.out.println("Thank you for shopping with us.");
+        System.out.println("Have a nice day! ;)");
+        System.out.println();
+
+        System.out.println("Enter 0 for exit or number from MENU(1- Guest,2- User,3- Administrator) for continue");
     }
-    
-    
+
+
     public static void main(String[] args) {
-    	Scanner sc = new Scanner(System.in);
-    	try {
-    		
-	        Vmzona magazin = new Vmzona("Vmzona");
-	        magazin.addStoka(Kategoriq.AVTOCHASTI, new Stoka("komplekt(2 gumi)", 25, "iron", "black"));
-	
-	        
-	        for(Kategoriq k : Kategoriq.values()) {
-	        	for(int i = 1; i <= BROI_RAZLICHNI_STOKI; i++) {
-	        		try {
-	                    magazin.addStoka(k, Stoka.daiStoka(k));
-	                } catch (Exception e) {
-	                    e.printStackTrace();
-	                }
-	        	}
-	        }
-	
-	        
-	        System.out.println("MENU VmZona");
-	        System.out.println("--------");
-	        System.out.println("1 - Guest");
-	        System.out.println("2 - User");
-	        System.out.println("3 - Administrator");
-	        System.out.println("0 - Exit");
-	
-	        int choose = sc.nextInt();
-	        while(true) {
-		        if(choose == 0) {
-		        	messageForVote();
-		        	return;
-		        }else {
-		        	if(choose == 1) {
-	            		System.out.println("Guest!");
-	            		Guest guest = new Guest();
-	            		magazin.izkaraiVsichkiNalichniStoki();
-	            		
-	            		guest.action(magazin);
-        			
-            	    	System.out.println("Finished");
-            	    	System.out.println("Continue");
-            	    	String  st = sc.next();
-            	    	if(st.equals("Finished")) {
-            	    		messageForExit(magazin);
-            	    		choose = sc.nextInt();
-            	    	}else {
-            	    		continue;
-            	    	}
-            	    }
-		        	if(choose == 2){
-            			System.out.println("Other!!");
-            			try {
-            				User user = new User(); /*User.daiMiUser(choose, "", "")*/;
-            				user.actions(magazin);
-            				
-            				System.out.println("Enter 0 for exit or number from MENU(1,2,3) for continue ");
-            				choose = sc.nextInt();
-            				
-            			} catch (Exception e) {
-            				e.printStackTrace();
-            			}
-	            	}
-		        	else {
-		        		Admin admin = new Admin(magazin);
-		        		admin.actions();
-		        		
-		        		System.out.println("Enter 0 for exit or number from MENU(1,2,3) for continue ");
-        				choose = sc.nextInt();
-		        	}
-		            	
-		        }
-		    }
-    	}catch (Exception e) {
-    		e.printStackTrace();
-    	}
+        Scanner sc = new Scanner(System.in);
+        try {
+
+            Vmzona magazin = new Vmzona("Vmzona");
+            magazin.addStoka(Kategoriq.AVTOCHASTI, new Stoka("komplekt(2 gumi)", 25, "iron", "black"));
+
+
+            for (Kategoriq k : Kategoriq.values()) {
+                for (int i = 1; i <= BROI_RAZLICHNI_STOKI; i++) {
+                    try {
+                        magazin.addStoka(k, Stoka.daiStoka(k));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+
+            System.out.println("MENU VmZona");
+            System.out.println("--------");
+            System.out.println("1 - Guest");
+            System.out.println("2 - User");
+            System.out.println("3 - Administrator");
+            System.out.println("0 - Exit");
+
+            String choose = sc.next();
+            while (true) {
+                if (choose.equalsIgnoreCase( "0")) {
+                   magazin.messageForVote();
+                    return;
+                } else {
+                    if (choose.equalsIgnoreCase( "1")) {
+
+                        System.out.println("Guest!");
+
+                        Guest guest = Guest.daiGuest();
+                        magazin.izkaraiVsichkiNalichniStoki();
+
+                        guest.action(magazin);
+
+                        System.out.println("Enter \"Finished\" for Finished");
+                        System.out.println("Enter \"Continue\" for Continue");
+                        String st = sc.next();
+                        if (st.equalsIgnoreCase("Finished")) {
+                            messageForExit(magazin);
+                            choose = sc.next();
+                        } else {
+                            continue;
+                        }
+                    }
+                    if (choose.equalsIgnoreCase( "2")) {
+                        System.out.println("Other!!");
+                        try {
+                            User.actions(magazin);
+
+                            System.out.println("Enter 0 for exit or number from MENU(1- Guest,2- User,3- Administrator) for continue ");
+                            choose = sc.next();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (choose.equalsIgnoreCase( "3")) {
+                        Admin admin = new Admin(magazin);
+                        try {
+                            admin.actions();
+                        } catch (AdminException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("Enter 0 for exit or number from MENU(1- Guest,2- User,3- Administrator) for continue ");
+                        choose = sc.next();
+                    }
+                    if (choose.charAt(0) < '0' || choose.charAt(0) > '3') {
+                        System.out.println("Invalid number - you enter as a guest");
+                        choose = "1";
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
