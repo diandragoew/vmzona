@@ -1,14 +1,10 @@
 package vmzona;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Demo {
 
     public static final int BROI_RAZLICHNI_STOKI = 10;
-
 
 
     public static void messageForExit(Vmzona magazin) {
@@ -49,11 +45,15 @@ public class Demo {
 
             String choose = sc.next();
             while (true) {
-                if (choose.equalsIgnoreCase( "0")) {
-                   magazin.messageForVote();
+                if (choose.equalsIgnoreCase("0")) {
+                    try {
+                        Vmzona.messageForVote();
+                    } catch (RatingException e) {
+                        System.err.println((e.getMessage()));
+                    }
                     return;
                 } else {
-                    if (choose.equalsIgnoreCase( "1")) {
+                    if (choose.equalsIgnoreCase("1")) {
 
                         System.out.println("Guest!");
 
@@ -72,7 +72,7 @@ public class Demo {
                             continue;
                         }
                     }
-                    if (choose.equalsIgnoreCase( "2")) {
+                    if (choose.equalsIgnoreCase("2")) {
                         System.out.println("Other!!");
                         try {
                             User.actions(magazin);
@@ -84,7 +84,7 @@ public class Demo {
                             e.printStackTrace();
                         }
                     }
-                    if (choose.equalsIgnoreCase( "3")) {
+                    if (choose.equalsIgnoreCase("3")) {
                         Admin admin = new Admin(magazin);
                         try {
                             admin.actions();

@@ -142,7 +142,7 @@ public class Vmzona {
         }
     }
 
-    public static void messageForVote() throws IOException {
+    public static void messageForVote() throws IOException, RatingException {
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Are you rate our site with score of 1 to 5?");
@@ -224,12 +224,8 @@ public class Vmzona {
                 System.out.println("average vote in the Vmzona is : " + ((allVoters * 1.0) / currentNumberVoters));
 
             }else {
-                try {
-                    throw new RatingException("invalid rating");
-                } catch (RatingException e) {
-                    System.err.println(e.getMessage());
-
-                }
+                System.out.println("Bye, have a nice day and come again ;)");
+                throw new RatingException("invalid rating");
             }
         }
             System.out.println("Bye, have a nice day and come again ;)");
