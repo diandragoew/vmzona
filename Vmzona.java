@@ -172,8 +172,6 @@ public class Vmzona {
 
                 int currentNumberVoters = 0;
                 int allVoters = 0;
-                LocalDate dt = LocalDate.now();
-                LocalTime lt = LocalTime.now();
                 
                 File votes = new File("files\\votes.txt");
                 votes.getParentFile().mkdir();

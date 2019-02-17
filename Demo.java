@@ -67,7 +67,6 @@ public class Demo {
                         System.out.println("Enter \"Continue\" for Continue");
                         String st = sc.next();
                         if (st.equalsIgnoreCase("Finished")) {
-                        	Vmzona.messageForVote();
                             messageForExit(magazin);
                             choose = sc.next();
                         } else {
