@@ -1,9 +1,6 @@
 package vmzona;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -81,22 +78,25 @@ public class Admin {
         System.out.println("8 - Exit");
     }
 	
-	 private void printVotes() throws IOException {
+	 private void printVotes() {
 	    	
     	File file = new File("files\\DataForVotes.txt");
     	File file1 = new File("files\\broiGlasuvali.txt");
-    	  
-    	BufferedReader br = new BufferedReader(new FileReader(file));
-    	BufferedReader br1 = new BufferedReader(new FileReader(file1));
-    	 
-    	String st; 
-    	while ((st = br.readLine()) != null) {
-    		System.out.println(st); 
-    	}
-    	System.out.println();
-    	while ((st = br1.readLine()) != null) {
-    		System.out.println("Count of voters: " + st); 
-    	}
+    	  try {
+              BufferedReader br = new BufferedReader(new FileReader(file));
+              BufferedReader br1 = new BufferedReader(new FileReader(file1));
+
+              String st;
+              while ((st = br.readLine()) != null) {
+                  System.out.println(st);
+              }
+              System.out.println();
+              while ((st = br1.readLine()) != null) {
+                  System.out.println("Count of voters: " + st);
+              }
+          }catch (IOException e){
+              System.err.println(e.getMessage());
+          }
 	}
 
     private void printProviders() {
