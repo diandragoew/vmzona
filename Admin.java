@@ -61,6 +61,7 @@ public class Admin {
                         break;
                 }
                 System.out.println();
+                listOfRights();
                 choose = sc.next();
             }
             return;
