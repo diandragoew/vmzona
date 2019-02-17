@@ -41,9 +41,6 @@ public class Profile {
         return phoneNumber != null && phoneNumber.trim().length() == 10 && phoneNumber.matches(regex);
     }
 	
-
-	
-
 	public void setFirstName() {
 		System.out.println("First Name:");
 		String firstName = sc.next();
@@ -144,6 +141,4 @@ public class Profile {
 		return "FirstName: " + firstName + ", LastName: " + lastName + ", BirthDate: " + birthDate + ", City:"
 				+ city + ", Address: " + address + ", PhoneNumber:" + phoneNumber ;
 	}
-	
-	
 }

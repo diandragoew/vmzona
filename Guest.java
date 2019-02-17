@@ -10,18 +10,8 @@ public class Guest {
 
     private Set<Stoka> stokiVKolichka = new TreeSet<>();
     private int sumOrder = 0;
-    private static Guest guest;
-
-    public static Guest daiGuest() {
-        if (guest == null){
-            guest=new Guest();
-
-            return guest;
-        }
-        return guest;
-    }
-
-    private Guest() {
+   
+    Guest() {
         this.sumOrder = 0;
     }
 

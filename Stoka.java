@@ -7,7 +7,7 @@ public class Stoka implements Comparable<Stoka> {
     private class Sklad {
         private Map<Kategoriq, List<String>> kategoriiStoki = new HashMap<>();
         private List<String> avtochasti = new ArrayList<String>(Arrays.asList("djanti, akumulator", "far", "chstachki"));
-        private List<String> parfyomi = new ArrayList<String>(Arrays.asList("refan", "paris", "playboy"));
+        private List<String> parfyumi = new ArrayList<String>(Arrays.asList("refan", "paris", "playboy"));
         private List<String> belyo = new ArrayList<String>(Arrays.asList("slip", "prashki s dantela", "bokserki"));
         private List<String> halati = new ArrayList<String>(Arrays.asList("pamuchen halat", "koprinen halat", "halat s aplikacii"));
         private List<String> chanti = new ArrayList<String>(Arrays.asList("chanta ot istinska koja", "chanta ot izkustvena koja", "polirana chanta"));
@@ -30,7 +30,7 @@ public class Stoka implements Comparable<Stoka> {
 
         public Sklad() {
             kategoriiStoki.put(Kategoriq.AVTOCHASTI, avtochasti);
-            kategoriiStoki.put(Kategoriq.PARFYOMI, parfyomi);
+            kategoriiStoki.put(Kategoriq.PARFYUMI, parfyumi);
             kategoriiStoki.put(Kategoriq.BELYO, belyo);
             kategoriiStoki.put(Kategoriq.HALATI, halati);
             kategoriiStoki.put(Kategoriq.CNANTI, chanti);
@@ -70,9 +70,6 @@ public class Stoka implements Comparable<Stoka> {
             throw new Exception("podal si mi null");
         }
     }
-
-
-
 
     public static int random(int min, int max) {
         return new Random().nextInt(max - min + 1) + min;

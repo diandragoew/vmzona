@@ -1,5 +1,9 @@
 package vmzona;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -18,26 +22,27 @@ public class Admin {
     }
 
     public void actions() throws Exception {
-
-
-        System.out.println("Enter your аdmin email address:");
+    	
+    	System.out.println("Enter your аdmin email address:");
         String checkEmail = sc.next();
-        System.out.println("enter your admin password:");
+        System.out.println("Enter your admin password:");
         String checkPassword = sc.next();
         if (checkEmail.equals(getEmail()) && checkPassword.equals(getPassword())) {
-            System.out.println("Successful");
+            
+        	System.out.println("Successful");
             this.listOfRights();
             String choose = sc.next();
-            while (!choose.equalsIgnoreCase("7")) {
+            
+            while (!choose.equalsIgnoreCase("8")) {
                 switch (choose) {
                     case "1":
-                        this.premahniUser(); //***
+                        this.premahniUser();
                         break;
                     case "2":
                         this.showUsers();
                         break;
                     case "3":
-                        this.showOborot(); //***
+                        this.showOborot();
                         break;
                     case "4":
                         this.printStocks();
@@ -48,19 +53,20 @@ public class Admin {
                     case "6":
                         this.printProviders();
                         break;
+                    case "7":
+                        this.printVotes();
+                        break;
                     default:
                         System.out.println("Incorrect");
                         break;
                 }
                 System.out.println();
-                listOfRights();
                 choose = sc.next();
             }
             return;
         } else {
             throw new AdminException("You have not access to this information!");
         }
-
     }
 
     private void listOfRights() {
@@ -70,8 +76,27 @@ public class Admin {
         System.out.println("4 - Show all stocks in store");
         System.out.println("5 - Show all orders in shop");
         System.out.println("6 - Show all providers in shop");
-        System.out.println("7 - Exit");
+        System.out.println("7 - Show all votes for shop");
+        System.out.println("8 - Exit");
     }
+	
+	 private void printVotes() throws IOException {
+	    	
+    	File file = new File("files\\DataForVotes.txt");
+    	File file1 = new File("files\\broiGlasuvali.txt");
+    	  
+    	BufferedReader br = new BufferedReader(new FileReader(file));
+    	BufferedReader br1 = new BufferedReader(new FileReader(file1));
+    	 
+    	String st; 
+    	while ((st = br.readLine()) != null) {
+    		System.out.println(st); 
+    	}
+    	System.out.println();
+    	while ((st = br1.readLine()) != null) {
+    		System.out.println("Count of voters: " + st); 
+    	}
+	}
 
     private void printProviders() {
         magazin.printAllProviders();
@@ -83,7 +108,7 @@ public class Admin {
     }
 
     private void showOborot() {
-        System.out.println(" turnover= " + magazin.getOborot() + " lv");
+        System.out.println("Turnover= " + magazin.getOborot() + " lv");
     }
 
     private void showOrders() {

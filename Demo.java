@@ -48,6 +48,7 @@ public class Demo {
                 if (choose.equalsIgnoreCase("0")) {
                     try {
                         Vmzona.messageForVote();
+                        System.out.println("Bye, have a nice day and come again ;)");
                     } catch (RatingException e) {
                         System.err.println((e.getMessage()));
                     }
@@ -57,7 +58,7 @@ public class Demo {
 
                         System.out.println("Guest!");
 
-                        Guest guest = Guest.daiGuest();
+                        Guest guest = new Guest();
                         magazin.izkaraiVsichkiNalichniStoki();
 
                         guest.action(magazin);
@@ -66,6 +67,7 @@ public class Demo {
                         System.out.println("Enter \"Continue\" for Continue");
                         String st = sc.next();
                         if (st.equalsIgnoreCase("Finished")) {
+                        	Vmzona.messageForVote();
                             messageForExit(magazin);
                             choose = sc.next();
                         } else {
@@ -105,4 +107,3 @@ public class Demo {
         }
     }
 }
-

@@ -1,10 +1,18 @@
 package vmzona;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 public class Vmzona {
@@ -67,7 +75,7 @@ public class Vmzona {
         String kriterij = sc.next();
 
         for (Map.Entry<Kategoriq, TreeMap<Integer, Stoka>> entry : stoki.entrySet()) {
-            System.out.println("kategoriq " + entry.getKey());
+            System.out.println("Kategoriq " + entry.getKey());
             System.out.println("------------------");
             switch (kriterij) {
                 case "1":
@@ -114,7 +122,7 @@ public class Vmzona {
                 }
             }
         }
-        System.out.println("there is no commodity with such a number !");
+        System.out.println("There is no commodity with such a number !");
         return false;
     }
 
@@ -148,9 +156,11 @@ public class Vmzona {
         System.out.println("Are you rate our site with score of 1 to 5?");
         System.out.println("YES or NO");
         String chooseVote = sc.nextLine();
+        
         if (chooseVote.equalsIgnoreCase("YES")) {
             System.out.println("Vote:");
-            String dadenVote=sc.next();
+            String dadenVote = sc.next();
+            
             if(proweriZaKorektnostNaNomer(dadenVote)) {
                 int vote = dadenVote.charAt(0)-'0';
                 if (vote < MIN_VOTE) {
@@ -162,12 +172,15 @@ public class Vmzona {
 
                 int currentNumberVoters = 0;
                 int allVoters = 0;
-
+                LocalDate dt = LocalDate.now();
+                LocalTime lt = LocalTime.now();
+                
                 File votes = new File("files\\votes.txt");
                 votes.getParentFile().mkdir();
+                
                 if (!votes.exists()) {
                     votes.createNewFile();
-                    try (PrintWriter pw = new PrintWriter(votes, StandardCharsets.UTF_8);) {
+                    try (PrintWriter pw = new PrintWriter(votes/*, StandardCharsets.UTF_8*/);) {
                         pw.println(vote);
                         allVoters += vote;
                         pw.flush();
@@ -176,14 +189,13 @@ public class Vmzona {
                     }
 
                 } else {
-                    try (
-                            Scanner vot = new Scanner(new FileInputStream(votes));) {
+                    try (Scanner vot = new Scanner(new FileInputStream(votes));) {
                         allVoters = vot.nextInt();
                     } catch (IOException e) {
                         e.printStackTrace();
                         System.out.println("Error: " + e.getMessage());
                     }
-                    try (PrintWriter pw = new PrintWriter(votes, StandardCharsets.UTF_8);) {
+                    try (PrintWriter pw = new PrintWriter(votes/*, StandardCharsets.UTF_8*/);) {
                         allVoters += vote;
                         pw.println(allVoters);
                         pw.flush();
@@ -191,12 +203,12 @@ public class Vmzona {
                         System.out.println("Error: " + e.getMessage());
                     }
                 }
-
+                
                 File broiGlasuvali = new File("files" + File.separator + "broiGlasuvali.txt");
                 broiGlasuvali.getParentFile().mkdir();
                 if (!broiGlasuvali.exists()) {
                     broiGlasuvali.createNewFile();
-                    try (PrintWriter pw = new PrintWriter(broiGlasuvali, StandardCharsets.UTF_8);) {
+                    try (PrintWriter pw = new PrintWriter(broiGlasuvali/*, StandardCharsets.UTF_8*/);) {
                         pw.println(++currentNumberVoters);
                         pw.flush();
                     } catch (IOException e) {
@@ -210,7 +222,7 @@ public class Vmzona {
                         e.printStackTrace();
                         System.out.println("Error: " + e.getMessage());
                     }
-                    try (PrintWriter pw = new PrintWriter(broiGlasuvali, StandardCharsets.UTF_8);) {
+                    try (PrintWriter pw = new PrintWriter(broiGlasuvali/*, StandardCharsets.UTF_8*/);) {
                         pw.println(++currentNumberVoters);
                         pw.flush();
                     } catch (IOException e) {
@@ -220,18 +232,45 @@ public class Vmzona {
                 }
 
                 System.out.println("Thank you!");
-                System.out.println("number of voters : " + currentNumberVoters);
-                System.out.println("average vote in the Vmzona is : " + ((allVoters * 1.0) / currentNumberVoters));
+                System.out.println("Count of voters : " + currentNumberVoters);
+                System.out.println("Average vote in the Vmzona is : " + ((allVoters * 1.0) / currentNumberVoters));
+                
+                createFileFOrVotes(vote);
 
             }else {
                 System.out.println("Bye, have a nice day and come again ;)");
-                throw new RatingException("invalid rating");
+                throw new RatingException("Invalid rating");
             }
         }
-            System.out.println("Bye, have a nice day and come again ;)");
     }
+    
+   public static void createFileFOrVotes(int vote) throws IOException {
+	   LocalDate dt = LocalDate.now();
+       LocalTime lt = LocalTime.now();
+       
+       File votes1 = new File("files\\DataForVotes.txt");
+       votes1.getParentFile().mkdir();
+       
+       if (!votes1.exists()) {
+           votes1.createNewFile();
+           try (PrintWriter pw = new PrintWriter(votes1/*, StandardCharsets.UTF_8*/);) {
+               pw.println("Date: " + dt + " // " + "Time: " + lt + " // " + "Grade: " + vote);
+               pw.flush();
+           } catch (IOException e) {
+               System.out.println("Error: " + e.getMessage());
+           }
 
-    private static boolean proweriZaKorektnostNaNomer(String nomer) {
+       } else {
+           try(FileWriter fw = new FileWriter(votes1,true);) {
+           		fw.write("Date: " + dt + " // " + "Time: " + lt + " // " + "Grade: " + vote + "\n");
+           } catch (IOException e) {
+               e.printStackTrace();
+               System.out.println("Error: " + e.getMessage());
+           }
+       }
+   }
+    
+   private static boolean proweriZaKorektnostNaNomer(String nomer) {
         if(nomer!=null&&nomer.length()>0) {
             for (int i = 0; i < nomer.length(); i++) {
                 if (nomer.charAt(i) < '0' || nomer.charAt(i) > '9') {

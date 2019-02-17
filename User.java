@@ -31,12 +31,6 @@ public class User {
         this.ownProfile = new Profile();
     }
 
-    public User(Vmzona mag) {
-        this.sumOrder = 0;
-        magazin = mag;
-    }
-
-
     private void setPassword(String password) {
         while (!isValidPassword(password)) {
 
@@ -101,7 +95,7 @@ public class User {
         while (true) {
 
             System.out.println();
-            System.out.println("izlez ot saita s cifra 3 ili prodalji s druga cifra");
+            System.out.println("Exit from site with 3 or continue with some other number.");
             String komanda = sc.next();
             if (komanda.equalsIgnoreCase("3")) {
                 System.out.println("do skoro!");

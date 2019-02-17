@@ -17,11 +17,10 @@ public class Dostavchik{
 	
 	@Override
 	public String toString() {
-		return "[name -> " + name + ", salary -> " + salary + " lv.]";
+		return "[<Name -> " + name + "> / <Salary -> " + salary + " lv.>]";
 	}
 
 	public String getName() {
 		return name;
 	}
-
 }
