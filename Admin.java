@@ -58,11 +58,7 @@ public class Admin {
                         break;
                 }
                 System.out.println();
-<<<<<<< HEAD
 				listOfRights();
-=======
-                listOfRights();
->>>>>>> 3ee66f72325b3c727b8eca7887c9850fe39a06ab
                 choose = sc.next();
             }
             return;
