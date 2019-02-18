@@ -265,22 +265,30 @@ public class Vmzona {
        
        if (!votes1.exists()) {
            votes1.createNewFile();
-           try (PrintWriter pw = new PrintWriter(votes1/*, StandardCharsets.UTF_8*/);) {
+           PrintWriter pw = null;
+           try {
+        	   pw = new PrintWriter(votes1/*, StandardCharsets.UTF_8*/);
                pw.println("Date: " + dt + " // " + "Time: " + lt + " // " + "Grade: " + vote);
                pw.flush();
            } catch (IOException e) {
                System.out.println("Error: " + e.getMessage());
+           }finally{
+        	   pw.close();
            }
 
        } else {
-           try(FileWriter fw = new FileWriter(votes1,true);) {
-           		fw.write("Date: " + dt + " // " + "Time: " + lt + " // " + "Grade: " + vote + "\n");
+    	   FileWriter fw = null; 
+           try{
+        	    fw = new FileWriter(votes1,true);
+           	 	fw.write("Date: " + dt + " // " + "Time: " + lt + " // " + "Grade: " + vote + "\n");
+           		fw.flush();
            } catch (IOException e) {
                e.printStackTrace();
                System.out.println("Error: " + e.getMessage());
+           }finally {
+        	   fw.close();
            }
        }
-
    }
    
      /* 
