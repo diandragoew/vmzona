@@ -108,7 +108,7 @@ public class Admin {
     }
 
     private void showOborot() {
-        System.out.println("Turnover= " + magazin.getOborot() + " lv");
+        System.out.println("Turnover = " + magazin.getOborot() + " lv");
     }
 
     private void showOrders() {
@@ -116,6 +116,10 @@ public class Admin {
     }
 
     private void showUsers() {
+		
+		//magazin.saveToJson();
+		//magazin.readFromJson();
+		
         int counter = 1;
         for (Map.Entry<String, User> entry : magazin.getUsers().entrySet()) {
             System.out.println("User " + counter + ": " + entry.getValue());
@@ -125,6 +129,9 @@ public class Admin {
     }
 
     private void premahniUser() {
+		
+		//magazin.readFromJson();
+		
         int counter = 1;
         for (Map.Entry<String, User> entry : magazin.getUsers().entrySet()) {
             System.out.println("User " + counter + ": " + entry.getValue().getEmail());
@@ -141,6 +148,8 @@ public class Admin {
             System.out.println("Wrong email address");
             return;
         }
+		
+		//magazin.saveToJson();
     }
 
     public String getEmail() {

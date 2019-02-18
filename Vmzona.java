@@ -29,6 +29,8 @@ public class Vmzona {
             new Dostavchik("Kaloqn")));
 
     private List<Stoka> porachaniStoki = new ArrayList<Stoka>();
+	
+	private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
 
     public Vmzona(String ime) {
         this.ime = ime;
@@ -172,8 +174,6 @@ public class Vmzona {
 
                 int currentNumberVoters = 0;
                 int allVoters = 0;
-                LocalDate dt = LocalDate.now();
-                LocalTime lt = LocalTime.now();
                 
                 File votes = new File("files\\votes.txt");
                 votes.getParentFile().mkdir();
@@ -268,7 +268,54 @@ public class Vmzona {
                System.out.println("Error: " + e.getMessage());
            }
        }
+
    }
+   
+     /* 
+    
+    public void saveToJson() throws InvalidDataException {
+
+		File jsonShop = new File("src\\vmzona\\jsonShop.json");
+		if (!jsonShop.exists()) {
+			try {
+				jsonShop.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		String jsonShopUser = gson.toJson(new HashMap(this.users));
+		
+		try (PrintWriter pw = new PrintWriter(jsonShop)) {
+			pw.println(jsonShopUser);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}	
+    }
+    
+    
+    public void readFromJson(String fileName) throws IOException {
+		String jsonString = readWithBufferedReader(fileName);
+		
+		Type type = new TypeToken<Map<String, User>>(){}.getType();
+		Map<String, User> myMap = gson.fromJson(jsonString, type);
+		this.users.putAll(myMap); 
+    }
+    
+    private String readWithBufferedReader(String fileName) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(fileName));
+		StringBuilder strBuild = new StringBuilder();
+		String line = null;
+		while ((line = reader.readLine()) != null) {
+			strBuild.append(line);
+		}
+		reader.close();
+
+		String st = strBuild.toString();
+		return st;
+	}
+    
+   */
     
    private static boolean proweriZaKorektnostNaNomer(String nomer) {
         if(nomer!=null&&nomer.length()>0) {
